@@ -1,0 +1,18 @@
+.container {
+  max-width: 640px;
+}
+
+.btn {
+  background: rgb(76, 73, 226);
+  color: #fff;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.btn:focus {
+  outline: none !important;
+}
+
+.btn:hover {
+  color: rgb(212, 211, 248);
+}
