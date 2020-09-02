@@ -24,22 +24,23 @@ class Chatroom {
 
     getChats(callback) {
         this.chats
-            .onSnapshot(snapshot => {
-               snapshot.docChanges().forEach(change => {
-                   if(change.type === 'added') {
-                    // Update UI
-                    callback(change.doc.data());
-                   }
-               })
-            });
+            .where(`room`, `==` , this.room)
+                .orderBy(`createdAt`)
+                    .onSnapshot(snapshot => {
+                    snapshot.docChanges().forEach(change => {
+                        if(change.type === 'added') {
+                            // Update UI
+                            callback(change.doc.data());
+                        }
+                    })
+                    });
     }
 }
 
-const chatroom = new Chatroom('gaming', 'eihab');
-console.log(chatroom);
-chatroom.addChat("wqeweqwewq!!")
-    .then(() => console.log("Chat Added"))
-        .catch(err => console.log(err));
+const chatroom = new Chatroom('general', 'eihab');
+// chatroom.addChat("wqeweqwewq!!")
+//     .then(() => console.log("Chat Added"))
+//         .catch(err => console.log(err));
 
 chatroom.getChats((data) => {
     console.log(data)
