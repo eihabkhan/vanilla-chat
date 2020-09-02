@@ -1,10 +1,11 @@
 
 
 class Chatroom {
-    constructor(room, username) {
-        this.room = room;
+    constructor(channel, username) {
+        this.channel = channel;
         this.username = username;
         this.chats = db.collection('chats');
+        this.unsub;
     }
 
     async addChat(message) {
@@ -13,7 +14,7 @@ class Chatroom {
         const chat = {
             message,
             username: this.username,
-            room: this.room,
+            channel: this.channel,
             createdAt: firebase.firestore.Timestamp.fromDate(now)
         }
 
@@ -23,25 +24,29 @@ class Chatroom {
     }
 
     getChats(callback) {
-        this.chats
-            .where(`room`, `==` , this.room)
-                .orderBy(`createdAt`)
-                    .onSnapshot(snapshot => {
-                    snapshot.docChanges().forEach(change => {
-                        if(change.type === 'added') {
-                            // Update UI
-                            callback(change.doc.data());
-                        }
-                    })
-                    });
+    this.unsub = this.chats
+                    .where(`channel`, `==` , this.channel)
+                        .orderBy(`createdAt`)
+                            .onSnapshot(snapshot => {
+                            snapshot.docChanges().forEach(change => {
+                                if(change.type === 'added') {
+                                    // Update UI
+                                    callback(change.doc.data());
+                                }
+                            })
+                            });
+    }
+
+    updateName(newName) {
+        this.username = newName
+    }
+
+    updateChannel(channel) {
+        this.channel = channel;
+        if(this.unsub) {
+            this.unsub();
+        }
     }
 }
 
-const chatroom = new Chatroom('general', 'eihab');
-// chatroom.addChat("wqeweqwewq!!")
-//     .then(() => console.log("Chat Added"))
-//         .catch(err => console.log(err));
 
-chatroom.getChats((data) => {
-    console.log(data)
-});

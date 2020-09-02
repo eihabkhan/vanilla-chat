@@ -16,3 +16,12 @@
 .btn:hover {
   color: rgb(212, 211, 248);
 }
+
+.username {
+  font-weight: bold;
+}
+
+.time {
+  font-size: 0.8rem;
+  color: #999;
+}
