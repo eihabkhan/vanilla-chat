@@ -39,6 +39,7 @@ class Chatroom {
 
     updateName(newName) {
         this.username = newName
+        localStorage.setItem("username", newName);
     }
 
     updateChannel(channel) {

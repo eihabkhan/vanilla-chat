@@ -25,3 +25,8 @@
   font-size: 0.8rem;
   color: #999;
 }
+
+.update-message {
+  text-align: center;
+  margin: 1rem auto;
+}
