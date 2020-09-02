@@ -22,4 +22,8 @@ class ChatUI {
 
         this.list.innerHTML += html
     }
+
+    clear() {
+        this.list.innerHTML = '';
+    }
 }
